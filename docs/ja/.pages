@@ -1,0 +1,8 @@
+nav:
+  - index.md
+  - プロジェクト: projects
+  - 開発: development
+  - WiKi: wiki
+  - コミュニティ: community.md
+  - ストア: https://store.idryer.org/
+  - ライセンス: license.md

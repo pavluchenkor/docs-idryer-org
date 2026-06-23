@@ -1,0 +1,8 @@
+nav:
+  - index.md
+  - Projets: projects
+  - Développement: development
+  - WiKi: wiki
+  - Communauté: community.md
+  - Boutique: https://store.idryer.org/
+  - Licence: license.md

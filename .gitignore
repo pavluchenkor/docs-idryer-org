@@ -1,0 +1,33 @@
+.env
+*.local
+.DS_Store
+
+# Папки куда rebuild.sh на сервере копирует docs/<lang>/ из продуктовых репо.
+docs/*/link/
+docs/*/protocol/
+docs/*/portal/
+
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Сборочные артефакты mkdocs
+site/
+.translation-state.json
+reference-repos/
+___*
+commit-message-map.json
+commit-message-raw-response.json
+prepare-commit-messages.mjs
+apply-commit-messages.mjs
+# Генерируемые rebuild.sh продуктовые папки (не коммитим в движок)
+docs/*/development/core/
+docs/*/development/byod/
+docs/*/projects/*/
+
+# Картинки продуктовых репо, копируемые rebuild.sh в docs/img/<подпапки>
+docs/img/*/
+docs/img/README.md
+
+template/

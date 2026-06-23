@@ -1,0 +1,8 @@
+nav:
+  - index.md
+  - 项目: projects
+  - 开发: development
+  - WiKi: wiki
+  - 社区: community.md
+  - 商店: https://store.idryer.org/
+  - 许可证: license.md

@@ -1,0 +1,4 @@
+nav:
+  - index.md
+  - Core: core
+  - 自分のデバイスを作る: byod
