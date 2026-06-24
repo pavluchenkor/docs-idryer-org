@@ -23,13 +23,15 @@ repos:
     url: https://github.com/pavluchenkor/Build-Your-Own-iDryer.git
 
   # ───────────── Проекты (включать по мере готовности docs-publish) ─────────────
-  - mount: projects/idryer
-    url: https://github.com/pavluchenkor/iDryer.git
+  # ВНИМАНИЕ: не раскомментируй mount без готовой ветки docs-publish — пустой mount
+  # создаёт пустую промежуточную папку и ломает навигацию ветки (меню пропадает).
+  # - mount: projects/idryer
+  #   url: https://github.com/pavluchenkor/iDryer.git
   - mount: projects/idryer/x
     url: https://github.com/pavluchenkor/iDryer-X.git
   # ───────────── Controller ─────────────
-  - mount: projects/idryer/controller
-    url: https://github.com/pavluchenkor/iDryerController.git
+  # - mount: projects/idryer/controller
+  #   url: https://github.com/pavluchenkor/iDryerController.git
   # - mount: projects/idryer/controller-v2
   #   url: https://github.com/pavluchenkor/iDryerControllerV2.git
   # ───────────── Unit ─────────────
