@@ -22,34 +22,43 @@ repos:
   - mount: development/byod
     url: https://github.com/pavluchenkor/Build-Your-Own-iDryer.git
 
-  # ───────────── Проекты (включать по мере готовности docs-publish) ─────────────
-  # ВНИМАНИЕ: не раскомментируй mount без готовой ветки docs-publish — пустой mount
-  # создаёт пустую промежуточную папку и ломает навигацию ветки (меню пропадает).
-  # - mount: projects/idryer
-  #   url: https://github.com/pavluchenkor/iDryer.git
+  # ───────────── Проекты ─────────────
+  # Группа в меню = средний сегмент mount-пути: projects/<группа>/<продукт>.
+  # Подпись группы задаётся в docs/<lang>/projects/.pages (напр. "- iDryer: idryer").
+  #
+  # ДВА ПРАВИЛА (иначе ломается сборка/навигация):
+  #   1. Раскомментируй mount ТОЛЬКО когда у репо есть ветка docs-publish.
+  #      Пустой mount создаёт пустую папку и ломает меню ветки projects.
+  #   2. Подпись новой группы в projects/.pages добавляй, лишь когда её папка
+  #      появилась (есть активный mount группы) — иначе NavEntryNotFound → краш.
+  #      "- ..." в projects/.pages и так подхватит всё смонтированное.
+
+  # — группа iDryer —
   - mount: projects/idryer/x
     url: https://github.com/pavluchenkor/iDryer-X.git
-  # ───────────── Controller ─────────────
-  # - mount: projects/idryer/controller
-  #   url: https://github.com/pavluchenkor/iDryerController.git
-  # - mount: projects/idryer/controller-v2
-  #   url: https://github.com/pavluchenkor/iDryerControllerV2.git
-  # ───────────── Unit ─────────────
   # - mount: projects/idryer/unit
   #   url: https://github.com/pavluchenkor/iDryer-Unit.git
+  # - mount: projects/idryer/controller-v2
+  #   url: https://github.com/pavluchenkor/iDryerControllerV2.git
   # - mount: projects/idryer/link
   #   url: https://github.com/pavluchenkor/iDryer-Link.git
   # - mount: projects/idryer/screen
   #   url: https://github.com/pavluchenkor/iDryer-Screen.git
-  # - mount: projects/iheater
+
+  # — группа iHeater (добавь "- iHeater: iheater" в projects/.pages при подключении) —
+  # - mount: projects/iheater/klipper
   #   url: https://github.com/pavluchenkor/iHeater.git
   # - mount: projects/iheater/standalone
   #   url: https://github.com/pavluchenkor/iHeater-Standalone-Firmware.git
   # - mount: projects/iheater/link
   #   url: https://github.com/pavluchenkor/iHeater-link.git
+
+  # — Storage (одиночный раздел) —
   # - mount: projects/storage
   #   url: https://github.com/pavluchenkor/iDryer-Storage.git
-  # - mount: projects/cloud
+
+  # — Portal (одиночный раздел) —
+  # - mount: projects/portal
   #   url: https://github.com/pavluchenkor/iDryer-portal.git
 
   # ───────────── WiKi ─────────────
