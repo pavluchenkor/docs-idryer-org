@@ -1,4 +1,4 @@
 nav:
   - index.md
-  - iDryer: idryer     # ← папка idryer покажется как «iDryer»
+  - iDryer: idryer
   - ...
