@@ -46,14 +46,14 @@ extra:
   social:
     - icon: fontawesome/brands/discourse
       link: https://forum.idryer.org
-    - icon: fontawesome/brands/discord
-      link: https://discord.gg/jGce5eeHHz
-    - icon: fontawesome/brands/github-alt
-      link: https://github.com/pavluchenkor
-    - icon: fontawesome/brands/telegram
-      link: https://t.me/iDryer
     - icon: fontawesome/brands/square-youtube
       link: https://www.youtube.com/@iDryerProject
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/jGce5eeHHz
+    - icon: fontawesome/brands/telegram
+      link: https://t.me/iDryer
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/pavluchenkor
 
 plugins:
   - search:
