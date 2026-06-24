@@ -1,6 +1,6 @@
 # Экосистема iDryer
 
-![iDryer Ecosystem](../../../img/iDryer_all.png)
+![iDryer Ecosystem](../../img/iDryer_all.png)
 
 ## О проекте
 
