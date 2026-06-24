@@ -101,9 +101,11 @@ plugins:
   - awesome-pages
   - glightbox
   - optimize:
-      enabled: !ENV [CI, false]
-      # Кэш — в /tmp (вне дерева docs/). Иначе на сервере его файлы попадают
-      # в коллекцию mkdocs и optimize падает (files.remove … not in collection).
+      # ВРЕМЕННО ОТКЛЮЧЁН: на сервере (CI=true) падал на on_env с
+      # `files.remove ... '../../tmp/mkdocs-optimize-cache/img/iDryer-favicon.png' not in collection`,
+      # из-за чего рушилась ВСЯ сборка. Картинки и так ресайзятся hooks/resize_images.py.
+      # Доп. сжатие pngquant вернём отдельно, разобравшись с cache_dir/версией плагина.
+      enabled: false
       cache_dir: /tmp/mkdocs-optimize-cache
 
 hooks:
