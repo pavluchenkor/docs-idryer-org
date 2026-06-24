@@ -68,10 +68,12 @@ def case_sensitive_exists(target_abs: Path, stop_root: Path) -> bool:
     return True
 
 
-def remove_code_blocks(text: str) -> str:
-    """Remove code blocks (```...```) and inline code (backticks) to avoid false matches on C++ lambdas etc."""
-    text = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
-    text = re.sub(r"`[^`]*`", "", text)
+def blank_out_code_blocks(text: str) -> str:
+    """Replace code blocks (```...```) and inline code with spaces to preserve line count."""
+    def replace_with_spaces(match: re.Match) -> str:
+        return " " * len(match.group(0))
+    text = re.sub(r"```.*?```", replace_with_spaces, text, flags=re.DOTALL)
+    text = re.sub(r"`[^`]*`", replace_with_spaces, text)
     return text
 
 
@@ -91,11 +93,8 @@ def main() -> int:
     for md in sorted(docs.rglob("*.md")):
         issues = []
         text = md.read_text(encoding="utf-8")
-        text_no_code = remove_code_blocks(text)
-        lines_no_code = text_no_code.splitlines()
-        original_lines = text.splitlines()
-        for i, line in enumerate(original_lines, 1):
-            clean_line = lines_no_code[i - 1] if i <= len(lines_no_code) else ""
+        text_clean = blank_out_code_blocks(text)
+        for i, (original_line, clean_line) in enumerate(zip(text.splitlines(), text_clean.splitlines()), 1):
             for m in list(RE_MD.finditer(clean_line)) + list(RE_HTML.finditer(clean_line)):
                 raw = m.group(1)
                 if not raw or raw.startswith(SKIP_PREFIXES):
