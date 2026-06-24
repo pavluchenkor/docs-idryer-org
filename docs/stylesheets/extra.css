@@ -10,7 +10,73 @@
   :root,
   [data-md-color-scheme=default] {
     --md-default-bg-color: #dcdcdc;
-    --md-admonition-bg-color: #90030C;
+  }
+
+  /* Адмонишены в светлой теме — правильные цвета Material */
+  [data-md-color-scheme=default] .admonition {
+    border-color: #1f77b4;
+  }
+  [data-md-color-scheme=default] .admonition.note {
+    border-left-color: #1f77b4;
+    background-color: rgba(31, 119, 180, 0.1);
+  }
+  [data-md-color-scheme=default] .admonition.abstract,
+  [data-md-color-scheme=default] .admonition.summary,
+  [data-md-color-scheme=default] .admonition.tldr {
+    border-left-color: #0097a7;
+    background-color: rgba(0, 151, 167, 0.1);
+  }
+  [data-md-color-scheme=default] .admonition.info {
+    border-left-color: #0097a7;
+    background-color: rgba(0, 151, 167, 0.1);
+  }
+  [data-md-color-scheme=default] .admonition.tip,
+  [data-md-color-scheme=default] .admonition.hint,
+  [data-md-color-scheme=default] .admonition.important {
+    border-left-color: #00897b;
+    background-color: rgba(0, 137, 123, 0.1);
+  }
+  [data-md-color-scheme=default] .admonition.success,
+  [data-md-color-scheme=default] .admonition.check,
+  [data-md-color-scheme=default] .admonition.done {
+    border-left-color: #00897b;
+    background-color: rgba(0, 137, 123, 0.1);
+  }
+  [data-md-color-scheme=default] .admonition.question,
+  [data-md-color-scheme=default] .admonition.help,
+  [data-md-color-scheme=default] .admonition.faq {
+    border-left-color: #f57c00;
+    background-color: rgba(245, 124, 0, 0.1);
+  }
+  [data-md-color-scheme=default] .admonition.warning,
+  [data-md-color-scheme=default] .admonition.caution,
+  [data-md-color-scheme=default] .admonition.attention {
+    border-left-color: #f57c00;
+    background-color: rgba(245, 124, 0, 0.1);
+  }
+  [data-md-color-scheme=default] .admonition.failure,
+  [data-md-color-scheme=default] .admonition.fail,
+  [data-md-color-scheme=default] .admonition.missing {
+    border-left-color: #d32f2f;
+    background-color: rgba(211, 47, 47, 0.1);
+  }
+  [data-md-color-scheme=default] .admonition.danger,
+  [data-md-color-scheme=default] .admonition.error {
+    border-left-color: #d32f2f;
+    background-color: rgba(211, 47, 47, 0.1);
+  }
+  [data-md-color-scheme=default] .admonition.bug {
+    border-left-color: #d32f2f;
+    background-color: rgba(211, 47, 47, 0.1);
+  }
+  [data-md-color-scheme=default] .admonition.example {
+    border-left-color: #7c4dff;
+    background-color: rgba(124, 77, 255, 0.1);
+  }
+  [data-md-color-scheme=default] .admonition.quote,
+  [data-md-color-scheme=default] .admonition.cite {
+    border-left-color: #616161;
+    background-color: rgba(97, 97, 97, 0.1);
   }
 
   :root {
