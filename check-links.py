@@ -69,9 +69,11 @@ def case_sensitive_exists(target_abs: Path, stop_root: Path) -> bool:
 
 
 def blank_out_code_blocks(text: str) -> str:
-    """Replace code blocks (```...```) and inline code with spaces to preserve line count."""
+    """Гасит код-блоки (```...```) и inline-код пробелами, чтобы ссылки внутри
+    примеров кода не считались настоящими. Переводы строк СОХРАНЯЕМ — иначе
+    многострочный блок схлопнул бы строки и сбил нумерацию/пропустил ссылки после него."""
     def replace_with_spaces(match: re.Match) -> str:
-        return " " * len(match.group(0))
+        return "".join(c if c == "\n" else " " for c in match.group(0))
     text = re.sub(r"```.*?```", replace_with_spaces, text, flags=re.DOTALL)
     text = re.sub(r"`[^`]*`", replace_with_spaces, text)
     return text
