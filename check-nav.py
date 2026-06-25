@@ -30,6 +30,7 @@ def build_tree(folder: Path) -> dict:
 
     title = pages_data.get("title", folder.name)
     children = []
+    warnings = []
 
     # Если есть явный nav в .pages, использовать его
     if "nav" in pages_data:
@@ -54,6 +55,9 @@ def build_tree(folder: Path) -> dict:
                             continue
                         target_path = folder / target
                         if target_path.is_dir():
+                            # ПРЕДУПРЕЖДЕНИЕ: использование формата "name: folder" может сломать навигацию
+                            warnings.append(f"⚠️  Используется формат '{display_name}: {target}' для папки. "
+                                          f"Это может вызвать проблемы в смонтированных репо!")
                             # Рекурсивно загрузить подпапку
                             subtree = build_tree(target_path)
                             subtree["title"] = display_name
@@ -84,8 +88,17 @@ def build_tree(folder: Path) -> dict:
     return {
         "title": title,
         "type": "folder",
-        "children": children
+        "children": children,
+        "warnings": warnings
     }
+
+
+def collect_warnings(node: dict) -> list:
+    """Собрать все предупреждения из дерева."""
+    warnings = node.get("warnings", [])
+    for child in node.get("children", []):
+        warnings.extend(collect_warnings(child))
+    return warnings
 
 
 def print_tree(node: dict, prefix: str = "", is_last: bool = True) -> None:
@@ -113,6 +126,8 @@ def main():
         print(f"❌ Путь не найден: {docs_path}", file=sys.stderr)
         return 1
 
+    all_warnings = []
+
     # Если это docs/ — показать все языки
     if docs_path.name == "docs":
         for lang_dir in sorted(docs_path.iterdir()):
@@ -120,10 +135,18 @@ def main():
                 print(f"\n📄 {lang_dir.name.upper()}:")
                 tree = build_tree(lang_dir)
                 print_tree(tree)
+                all_warnings.extend(collect_warnings(tree))
     else:
         # Показать только этот язык
         tree = build_tree(docs_path)
         print_tree(tree)
+        all_warnings.extend(collect_warnings(tree))
+
+    # Вывести все предупреждения в конце
+    if all_warnings:
+        print("\n" + "="*60)
+        for warning in all_warnings:
+            print(warning)
 
     return 0
 
