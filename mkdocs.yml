@@ -114,7 +114,6 @@ hooks:
   - hooks/nav_order.py
   - hooks/edit_url.py
   - hooks/asset_links.py
-  - hooks/fix_i18n_nav_post.py
 
 markdown_extensions:
   - admonition
