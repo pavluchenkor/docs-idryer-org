@@ -23,12 +23,13 @@ def load_pages(file_path: Path) -> dict:
         return {"error": str(e)}
 
 
-def build_tree(folder: Path, level: int = 0) -> list:
-    """Построить дерево навигации из папок и .pages файлов."""
-    items = []
-
+def build_tree(folder: Path) -> dict:
+    """Построить полное дерево навигации с вложениями."""
     pages_file = folder / ".pages"
     pages_data = load_pages(pages_file) if pages_file.exists() else {}
+
+    title = pages_data.get("title", folder.name)
+    children = []
 
     # Если есть явный nav в .pages, использовать его
     if "nav" in pages_data:
@@ -36,93 +37,69 @@ def build_tree(folder: Path, level: int = 0) -> list:
         if isinstance(nav, list):
             for entry in nav:
                 if isinstance(entry, str):
-                    # Просто имя файла или папки
                     path = folder / entry
                     if path.is_dir():
-                        title = entry
-                        if "title" in pages_data:
-                            title = pages_data["title"]
-                        items.append({
-                            "title": title,
-                            "path": path,
-                            "type": "folder",
-                            "level": level
-                        })
+                        # Рекурсивно загрузить подпапку
+                        children.append(build_tree(path))
                     elif path.with_suffix(".md").exists():
-                        items.append({
+                        children.append({
                             "title": entry.replace(".md", ""),
-                            "path": entry,
                             "type": "file",
-                            "level": level
+                            "children": []
                         })
                 elif isinstance(entry, dict):
-                    # Переименованная папка/файл: {Display Name: folder}
                     for display_name, target in entry.items():
+                        if target.startswith("http"):
+                            # Пропустить внешние ссылки
+                            continue
                         target_path = folder / target
                         if target_path.is_dir():
-                            items.append({
-                                "title": display_name,
-                                "path": target_path,
-                                "type": "folder",
-                                "level": level
-                            })
+                            # Рекурсивно загрузить подпапку
+                            subtree = build_tree(target_path)
+                            subtree["title"] = display_name
+                            children.append(subtree)
                         elif target_path.with_suffix(".md").exists():
-                            items.append({
+                            children.append({
                                 "title": display_name,
-                                "path": target,
                                 "type": "file",
-                                "level": level
+                                "children": []
                             })
     else:
         # Автоматическое получение из папок
-        title = pages_data.get("title", folder.name)
-
-        # Рекурсивно добавить подпапки
         try:
             for item in sorted(folder.iterdir()):
                 if item.name.startswith(".") or item.name.startswith("_"):
                     continue
                 if item.is_dir():
-                    items.append({
-                        "title": item.name,
-                        "path": item,
-                        "type": "folder",
-                        "level": level
-                    })
+                    children.append(build_tree(item))
                 elif item.suffix == ".md" and item.name != "README.md":
-                    items.append({
+                    children.append({
                         "title": item.stem,
-                        "path": item.name,
                         "type": "file",
-                        "level": level
+                        "children": []
                     })
         except PermissionError:
             pass
 
-    return items
+    return {
+        "title": title,
+        "type": "folder",
+        "children": children
+    }
 
 
-def print_tree(folder: Path, level: int = 0, prefix: str = "") -> None:
+def print_tree(node: dict, prefix: str = "", is_last: bool = True) -> None:
     """Вывести дерево навигации в консоль."""
-    items = build_tree(folder, level)
+    # Вывести текущий узел
+    connector = "└─ " if is_last else "├─ "
+    print(f"{prefix}{connector}{node['title']}" if prefix else node['title'])
 
-    for i, item in enumerate(items):
-        is_last = i == len(items) - 1
-
-        # Определить префикс
-        if level == 0:
-            current_prefix = ""
-            next_prefix = ""
-        else:
-            current_prefix = "└─ " if is_last else "├─ "
-            next_prefix = "   " if is_last else "│  "
-
-        # Вывести текущий элемент
-        print(f"{prefix}{current_prefix}{item['title']}")
-
-        # Если папка — рекурсивно вывести содержимое
-        if item["type"] == "folder":
-            print_tree(item["path"], level + 1, prefix + next_prefix)
+    # Вывести детей
+    children = node.get("children", [])
+    for i, child in enumerate(children):
+        is_last_child = i == len(children) - 1
+        extension = "   " if is_last else "│  "
+        print_tree(child, prefix + extension, is_last_child)
 
 
 def main():
@@ -139,12 +116,14 @@ def main():
     # Если это docs/ — показать все языки
     if docs_path.name == "docs":
         for lang_dir in sorted(docs_path.iterdir()):
-            if lang_dir.is_dir() and not lang_dir.name.startswith("."):
+            if lang_dir.is_dir() and not lang_dir.name.startswith(".") and lang_dir.name != "img":
                 print(f"\n📄 {lang_dir.name.upper()}:")
-                print_tree(lang_dir)
+                tree = build_tree(lang_dir)
+                print_tree(tree)
     else:
         # Показать только этот язык
-        print_tree(docs_path)
+        tree = build_tree(docs_path)
+        print_tree(tree)
 
     return 0
 
