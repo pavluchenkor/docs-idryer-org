@@ -38,8 +38,8 @@ repos:
     url: https://github.com/pavluchenkor/iDryer-X.git
   # - mount: projects/idryer/unit
   #   url: https://github.com/pavluchenkor/iDryer-Unit.git
-  # - mount: projects/idryer/controller-v2
-  #   url: https://github.com/pavluchenkor/iDryerControllerV2.git
+  - mount: projects/idryer/controller-v2
+    url: https://github.com/pavluchenkor/iDryerControllerV2.git
   # - mount: projects/idryer/link
   #   url: https://github.com/pavluchenkor/iDryer-Link.git
   # - mount: projects/idryer/screen
