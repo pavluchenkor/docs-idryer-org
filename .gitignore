@@ -24,7 +24,10 @@ apply-commit-messages.mjs
 # Генерируемые rebuild.sh продуктовые папки (не коммитим в движок)
 docs/*/development/core/
 docs/*/development/byod/
-docs/*/projects/*/
+# Содержимое групп projects/<группа>/ генерируется монтированием — игнорим,
+# КРОМЕ .pages самой группы (им мы задаём порядок/подписи продуктов вручную).
+docs/*/projects/*/**
+!docs/*/projects/*/.pages
 
 # Картинки продуктовых репо, копируемые rebuild.sh в docs/img/<подпапки>
 docs/img/*/
