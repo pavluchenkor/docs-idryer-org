@@ -219,7 +219,9 @@ cd "$CENTRAL_DIR"
 find . -depth -type d -name .cache -exec rm -rf {} + 2>/dev/null || true
 # CI=true включает плагин optimize (см. mkdocs.yml: enabled: !ENV [CI, false]) —
 # сжатие PNG/JPG только при серверной сборке; локально optimize выключен.
-CI=true mkdocs build --clean --site-dir /tmp/site-out
+# PYTHONUNBUFFERED + stdbuf — вывод идёт построчно в реальном времени,
+# чтобы `docker logs -f` показывал прогресс сборки, а не выдавал всё пачкой в конце.
+CI=true PYTHONUNBUFFERED=1 stdbuf -oL -eL mkdocs build --clean --site-dir /tmp/site-out
 
 echo "[$(date -Iseconds)] rebuild: sync to output"
 rsync -a --delete /tmp/site-out/ "$OUTPUT/"
