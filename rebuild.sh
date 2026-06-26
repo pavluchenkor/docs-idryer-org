@@ -71,7 +71,7 @@ clone_or_update() {
   if [ -d "$dir/.git" ]; then
     git -C "$dir" fetch --depth=1 origin "$branch"
     git -C "$dir" reset --hard FETCH_HEAD
-    git -C "$dir" clean -fd  # убрать stray-файлы (удалённые в origin), иначе тащим из кэша
+    git -C "$dir" clean -fdx  # убрать stray-файлы (удалённые в origin), иначе тащим из кэша
   else
     rm -rf "$dir"
     git clone --depth=1 --branch "$branch" "$url" "$dir"
@@ -87,7 +87,7 @@ clone_or_update_sparse() {
     git -C "$dir" sparse-checkout set "${subpaths[@]}"
     git -C "$dir" fetch --depth=1 origin "$branch"
     git -C "$dir" reset --hard FETCH_HEAD
-    git -C "$dir" clean -fd  # убрать stray-файлы (удалённые в origin), иначе тащим из кэша
+    git -C "$dir" clean -fdx  # убрать stray-файлы (удалённые в origin), иначе тащим из кэша
   else
     rm -rf "$dir"
     git clone --depth=1 --filter=blob:none --sparse --branch "$branch" "$url" "$dir"
