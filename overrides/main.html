@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% set announce_texts = {
+  "cs": {
+    "message": "Launch of the forum! Discussion, feedback, and opinions:",
+    "link": "Forum"
+  },
+  "de": {
+    "message": "Launch of the forum! Discussion, feedback, and opinions:",
+    "link": "Forum"
+  },
+  "en": {
+    "message": "Launch of the forum! Discussion, feedback, and opinions:",
+    "link": "Forum"
+  },
+  "es": {
+    "message": "Launch of the forum! Discussion, feedback, and opinions:",
+    "link": "Forum"
+  },
+  "fr": {
+    "message": "Launch of the forum! Discussion, feedback, and opinions:",
+    "link": "Forum"
+  },
+  "ja": {
+    "message": "Launch of the forum! Discussion, feedback, and opinions:",
+    "link": "Forum"
+  },
+  "pt": {
+    "message": "Launch of the forum! Discussion, feedback, and opinions:",
+    "link": "Forum"
+  },
+  "pt-BR": {
+    "message": "Launch of the forum! Discussion, feedback, and opinions:",
+    "link": "Forum"
+  },
+  "ru": {
+    "message": "Запуск форума! Обсуждение, отзывы, мнения:",
+    "link": "Форум"
+  },
+  "zh": {
+    "message": "Launch of the forum! Discussion, feedback, and opinions:",
+    "link": "Forum"
+  },
+  "zh-Hant": {
+    "message": "Launch of the forum! Discussion, feedback, and opinions:",
+    "link": "Forum"
+  }
+} %}
+
+{% set announce = announce_texts.get(config.theme.language, announce_texts.en) %}
+
+{% block announce %}
+{{ announce.message }}
+<a
+  class="announce-chip announce-chip--forum"
+  href="https://forum.idryer.org/"
+  target="_blank"
+  rel="noopener"
+  >{{ announce.link }}</a
+>
+{% endblock %}

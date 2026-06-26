@@ -88,4 +88,36 @@
   .md-content {
     max-width: 90rem;
   }
+
+  .announce-chip {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.45rem;
+    padding: 0.14rem 0.38rem;
+    border: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+    border-radius: 999px;
+    white-space: nowrap;
+    font-size: 0.65rem;
+    line-height: 1;
+    color: inherit;
+    text-decoration: none;
+    background: color-mix(in srgb, var(--md-default-bg-color) 92%, currentColor 8%);
+  }
+
+  .announce-chip:hover {
+    opacity: 1;
+  }
+
+  .md-banner .announce-chip--forum,
+  .md-banner .announce-chip--forum:visited {
+    color: #61c26f;
+    border-color: color-mix(in srgb, #61c26f 45%, transparent);
+    background: color-mix(in srgb, var(--md-default-bg-color) 92%, #61c26f 8%);
+  }
+
+  .md-banner .announce-chip--forum:hover {
+    color: #7ad988;
+    border-color: #7ad988;
+    background: color-mix(in srgb, var(--md-default-bg-color) 88%, #61c26f 12%);
+  }
 }
