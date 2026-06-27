@@ -56,8 +56,8 @@ repos:
     url: https://github.com/pavluchenkor/iHeater-Link.git
 
   # — Storage (одиночный раздел) —
-  # - mount: projects/storage
-  #   url: https://github.com/pavluchenkor/iDryer-Storage.git
+  - mount: projects/storage
+    url: https://github.com/pavluchenkor/iDryer-Storage.git
 
   # — Portal (одиночный раздел) —
   # - mount: projects/portal
