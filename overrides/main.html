@@ -1,59 +1,20 @@
-{% extends "base.html" %}
-
-{% set announce_texts = {
-  "cs": {
-    "message": "Launch of the forum! Discussion, feedback, and opinions:",
-    "link": "Forum"
-  },
-  "de": {
-    "message": "Launch of the forum! Discussion, feedback, and opinions:",
-    "link": "Forum"
-  },
-  "en": {
-    "message": "Launch of the forum! Discussion, feedback, and opinions:",
-    "link": "Forum"
-  },
-  "es": {
-    "message": "Launch of the forum! Discussion, feedback, and opinions:",
-    "link": "Forum"
-  },
-  "fr": {
-    "message": "Launch of the forum! Discussion, feedback, and opinions:",
-    "link": "Forum"
-  },
-  "ja": {
-    "message": "Launch of the forum! Discussion, feedback, and opinions:",
-    "link": "Forum"
-  },
-  "pt": {
-    "message": "Launch of the forum! Discussion, feedback, and opinions:",
-    "link": "Forum"
-  },
-  "pt-BR": {
-    "message": "Launch of the forum! Discussion, feedback, and opinions:",
-    "link": "Forum"
-  },
-  "ru": {
-    "message": "Запуск форума! Обсуждение, отзывы, мнения:",
-    "link": "Форум"
-  },
-  "zh": {
-    "message": "Launch of the forum! Discussion, feedback, and opinions:",
-    "link": "Forum"
-  },
-  "zh-Hant": {
-    "message": "Launch of the forum! Discussion, feedback, and opinions:",
-    "link": "Forum"
-  }
-} %}
-
-{% set announce = announce_texts.get(config.theme.language, announce_texts.en) %}
-
-{% block announce %}
-{{ announce.message }}
+{% extends "base.html" %} {% set announce_texts = { "cs": { "message": "Pomozte
+překládat dokumentaci:", "link": "Podpořit" }, "de": { "message": "Helfen Sie
+bei der Dokumentation:", "link": "Unterstützen" }, "en": { "message": "Help
+translate the documentation:", "link": "Support" }, "es": { "message": "Ayuda a
+traducir la documentación:", "link": "Apoyar" }, "fr": { "message": "Aidez à
+traduire la documentation :", "link": "Soutenir" }, "ja": { "message":
+"ドキュメントの翻訳を手伝う:", "link": "サポート" }, "pt": { "message": "Ajude a
+traduzir a documentação:", "link": "Apoiar" }, "pt-BR": { "message": "Ajude a
+traduzir a documentação:", "link": "Apoiar" }, "ru": { "message": "Помогите
+перевести документацию:", "link": "Поддержать" }, "zh": { "message":
+"帮助翻译文档:", "link": "支持" }, "zh-Hant": { "message": "幫助翻譯文檔:",
+"link": "支持" } } %} {% set announce =
+announce_texts.get(config.theme.language, announce_texts.en) %} {% block
+announce %} {{ announce.message }}
 <a
   class="announce-chip announce-chip--forum"
-  href="https://forum.idryer.org/"
+  href="https://www.patreon.com/iDryer/"
   target="_blank"
   rel="noopener"
   >{{ announce.link }}</a
