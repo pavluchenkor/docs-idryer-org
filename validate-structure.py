@@ -44,9 +44,10 @@ def main():
         print(f"❌ Путь не найден: {path}")
         return 1
 
-    # Найти языки
+    # Найти языки (исключить служебные папки)
+    SKIP_DIRS = {'img', 'imgweb', 'assets', 'CAD', 'KiCad', 'PDF', 'Schematics'}
     languages = sorted([d.name for d in path.iterdir()
-                       if d.is_dir() and not d.name.startswith('.')])
+                       if d.is_dir() and not d.name.startswith('.') and d.name not in SKIP_DIRS])
 
     if len(languages) < 2:
         print(f"⚠️  Найден только один язык: {languages}")
