@@ -2,6 +2,6 @@ nav:
   - index.md
   - idryer
   - iheater
-  - storage
-  - cloud
+  # - storage
+  # - cloud
   - ...
