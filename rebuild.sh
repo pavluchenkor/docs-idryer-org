@@ -229,4 +229,7 @@ echo "[$(date -Iseconds)] rebuild: sync to output"
 rsync -a --delete /tmp/site-out/ "$OUTPUT/"
 rm -rf /tmp/site-out
 
+echo "[$(date -Iseconds)] rebuild: validate nav"
+python3 /app/check-nav.py "$CENTRAL_DIR/docs/" 2>&1 | sed "s/^/[validate] /" || true
+
 echo "[$(date -Iseconds)] rebuild: done"

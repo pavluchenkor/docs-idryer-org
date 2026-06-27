@@ -38,6 +38,13 @@ def build_tree(folder: Path) -> dict:
         if isinstance(nav, list):
             for entry in nav:
                 if isinstance(entry, str):
+                    # Пропустить многоточие
+                    if entry == "...":
+                        continue
+                    # Пропустить файлы index.md
+                    if entry == "index.md":
+                        continue
+
                     path = folder / entry
                     if path.is_dir():
                         # Рекурсивно загрузить подпапку
@@ -46,6 +53,13 @@ def build_tree(folder: Path) -> dict:
                         children.append({
                             "title": entry.replace(".md", ""),
                             "type": "file",
+                            "children": []
+                        })
+                    else:
+                        # Папка не существует — показать как "отсутствует"
+                        children.append({
+                            "title": f"{entry} ⚠️ (не найдена)",
+                            "type": "missing",
                             "children": []
                         })
                 elif isinstance(entry, dict):
@@ -66,6 +80,12 @@ def build_tree(folder: Path) -> dict:
                             children.append({
                                 "title": display_name,
                                 "type": "file",
+                                "children": []
+                            })
+                        else:
+                            children.append({
+                                "title": f"{display_name} ⚠️ (не найдена)",
+                                "type": "missing",
                                 "children": []
                             })
     else:

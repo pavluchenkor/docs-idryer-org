@@ -23,6 +23,7 @@ services:
       # Правка → git pull на сервере → docker-compose restart. Без build образа.
       - ./rebuild.sh:/app/rebuild.sh:ro
       - ./hooks.json.template:/app/hooks.json.template:ro
+      - ./check-nav.py:/app/check-nav.py:ro
 
 volumes:
   docs-idryer-org-build-cache:
