@@ -142,9 +142,14 @@ def main():
 
     docs_path = Path(args.docs).resolve()
 
+    # На сервере в контейнере файлы в /build/docs-idryer-org/, пробуем оба варианта
     if not docs_path.exists():
-        print(f"❌ Путь не найден: {docs_path}", file=sys.stderr)
-        return 1
+        fallback = Path("/build/docs-idryer-org") / args.docs
+        if fallback.exists():
+            docs_path = fallback.resolve()
+        else:
+            print(f"❌ Путь не найден: {docs_path}", file=sys.stderr)
+            return 1
 
     all_warnings = []
 
