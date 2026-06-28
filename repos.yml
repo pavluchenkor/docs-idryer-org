@@ -34,8 +34,8 @@ repos:
   #      "- ..." в projects/.pages и так подхватит всё смонтированное.
 
   # — группа iDryer —
-  # - mount: projects/idryer/controller
-  #   url: https://github.com/pavluchenkor/iDryerController.git
+  - mount: projects/idryer/controller
+    url: https://github.com/pavluchenkor/iDryerController.git
   - mount: projects/idryer/controller-v2
     url: https://github.com/pavluchenkor/iDryerControllerV2.git
   - mount: projects/idryer/x
