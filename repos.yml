@@ -60,8 +60,8 @@ repos:
     url: https://github.com/pavluchenkor/iDryer-Storage.git
 
   # — Portal (одиночный раздел) —
-  # - mount: projects/portal
-  #   url: https://github.com/pavluchenkor/iDryer-portal.git
+  - mount: projects/portal
+    url: https://github.com/pavluchenkor/iDryer-portal.git
 
   # ───────────── WiKi ─────────────
   - mount: wiki
