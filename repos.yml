@@ -63,6 +63,10 @@ repos:
   - mount: projects/portal
     url: https://github.com/pavluchenkor/iDryer-portal.git
 
+  # — App (мобильное приложение) —
+  # - mount: projects/app
+  #   url: https://github.com/pavluchenkor/iDryer-portal.git (или отдельный репо)
+
   # ───────────── WiKi ─────────────
   - mount: wiki
     url: https://github.com/pavluchenkor/idryer-wiki.git

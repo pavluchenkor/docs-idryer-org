@@ -3,5 +3,5 @@ nav:
   - idryer
   - iheater
   - storage
-  - cloud
-  - ...
+  - portal
+  # - app  - ...
