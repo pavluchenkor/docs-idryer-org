@@ -1,12 +1,39 @@
-# iDryer 開発者ドキュメント
+---
+hide:
+  - navigation
+  - toc
+---
 
-iDryerエコシステムと互換性のあるデバイス、インテグレーション、サービスを構築する開発者向けの技術リファレンス。
+# iDryer ドキュメント
 
-## セクション
+iDryer エコシステムのデバイスの組み立て、ファームウェア、運用、および開発者向けドキュメント。
 
-- **[Core](core/)** — iDryer互換デバイス向けESP32ライブラリ。WiFiプロビジョニング、クラウド登録、TLS MQTTセッション、コマンドルーティング、テレメトリを処理します。デバイス固有のロジックのみを記述するだけです。
-- **[自分のデバイスを作ろう](byod/)** — メーカー向けの電子工学とファームウェアの基礎：コントローラ、センサー、ヒーター、電源回路、インターフェース、実践ガイド。
+<div class="hero-links" markdown>
 
-## ユーザードキュメント
+[フォーラム :fontawesome-brands-discourse:](https://forum.idryer.org/){ .md-button }
+[Discord :fontawesome-brands-discord:](https://discord.gg/jGce5eeHHz){ .md-button }
+[Telegram :fontawesome-brands-telegram:](https://t.me/iDryer){ .md-button }
 
-組み立て、フラッシュ、操作ガイドはプロジェクトのメインサイトにあります：[docs.idryer.org](https://docs.idryer.org/)。
+</div>
+
+<div class="grid cards" markdown>
+
+-   :material-cube-outline:{ .lg .middle } __[プロジェクト](projects/)__
+
+    ---
+
+    エコシステムのデバイス: iDryer、iHeater、Storage、Portal。
+
+-   :material-code-tags:{ .lg .middle } __[開発](development/)__
+
+    ---
+
+    開発者向け: Core (ESP32 ライブラリ)、自分のデバイスを作る。
+
+-   :material-book-open-variant:{ .lg .middle } __WiKi__
+
+    ---
+
+    乾燥、材料、TDS。_移行中。_
+
+</div>

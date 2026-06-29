@@ -1,12 +1,39 @@
-# Dokumentace iDryer pro vývojáře
+---
+hide:
+  - navigation
+  - toc
+---
 
-Technická reference pro vývojáře, kteří budují zařízení, integrace a služby kompatibilní s ekosystémem iDryer.
+# Dokumentace iDryer
 
-## Sekce
+Sestavení, firmware a provoz zařízení ekosystému iDryer, plus dokumentace pro vývojáře.
 
-- **[Core](core/)** — ESP32 knihovna pro zařízení kompatibilní s iDryer. Zajišťuje WiFi provisioning, registraci v cloudu, TLS MQTT relaci, směrování příkazů a telemetrii. Píšete pouze logiku specifickou pro dané zařízení.
-- **[Postav si vlastní zařízení](byod/)** — Základy elektroniky a firmware pro tvůrce: řadiče, senzory, topidla, silové obvody, rozhraní a praktické příručky.
+<div class="hero-links" markdown>
 
-## Uživatelská dokumentace
+[Fórum :fontawesome-brands-discourse:](https://forum.idryer.org/){ .md-button }
+[Discord :fontawesome-brands-discord:](https://discord.gg/jGce5eeHHz){ .md-button }
+[Telegram :fontawesome-brands-telegram:](https://t.me/iDryer){ .md-button }
 
-Návody pro sestavení, flashování a provoz jsou na hlavním webu projektu: [docs.idryer.org](https://docs.idryer.org/).
+</div>
+
+<div class="grid cards" markdown>
+
+-   :material-cube-outline:{ .lg .middle } __[Projekty](projects/)__
+
+    ---
+
+    Zařízení ekosystému: iDryer, iHeater, Storage, Portal.
+
+-   :material-code-tags:{ .lg .middle } __[Vývoj](development/)__
+
+    ---
+
+    Pro vývojáře: Core (knihovna ESP32), Postav si vlastní zařízení.
+
+-   :material-book-open-variant:{ .lg .middle } __WiKi__
+
+    ---
+
+    Sušení, materiály, TDS. _Probíhá migrace._
+
+</div>

@@ -1,12 +1,39 @@
-# iDryer 開發者文件
+---
+hide:
+  - navigation
+  - toc
+---
 
-面向開發者的技術參考，用於構建與 iDryer 生態系統相容的裝置、整合和服務。
+# iDryer 文件
 
-## 章節
+iDryer 生態裝置的組裝、韌體和使用說明，以及開發者文件。
 
-- **[Core](core/)** — 適用於 iDryer 相容裝置的 ESP32 函式庫。處理 WiFi 配置、雲端註冊、TLS MQTT 會話、命令路由和遙測。您只需編寫裝置特定的邏輯。
-- **[構建您自己的裝置](byod/)** — 面向創客的電子和韌體基礎知識：控制器、感測器、加熱器、電源電路、介面和實踐指南。
+<div class="hero-links" markdown>
 
-## 使用者文件
+[論壇 :fontawesome-brands-discourse:](https://forum.idryer.org/){ .md-button }
+[Discord :fontawesome-brands-discord:](https://discord.gg/jGce5eeHHz){ .md-button }
+[Telegram :fontawesome-brands-telegram:](https://t.me/iDryer){ .md-button }
 
-組裝、燒錄和操作指南位於專案主站：[docs.idryer.org](https://docs.idryer.org/)。
+</div>
+
+<div class="grid cards" markdown>
+
+-   :material-cube-outline:{ .lg .middle } __[專案](projects/)__
+
+    ---
+
+    生態裝置：iDryer、iHeater、Storage、Portal。
+
+-   :material-code-tags:{ .lg .middle } __[開發](development/)__
+
+    ---
+
+    面向開發者：Core（ESP32 函式庫）、建構自己的裝置。
+
+-   :material-book-open-variant:{ .lg .middle } __WiKi__
+
+    ---
+
+    乾燥、材料、TDS。_正在遷移。_
+
+</div>

@@ -1,12 +1,39 @@
-# Documentação iDryer para desenvolvedores
+---
+hide:
+  - navigation
+  - toc
+---
 
-Referência técnica para desenvolvedores que constroem dispositivos, integrações e serviços compatíveis com o ecossistema iDryer.
+# Documentação iDryer
 
-## Seções
+Montagem, firmware e operação dos dispositivos do ecossistema iDryer, além de documentação para desenvolvedores.
 
-- **[Core](core/)** — Biblioteca ESP32 para dispositivos compatíveis com iDryer. Gerencia o provisionamento WiFi, vinculação à nuvem, sessão TLS MQTT, roteamento de comandos e telemetria. Você escreve apenas a lógica específica do dispositivo.
-- **[Construa seu próprio dispositivo](byod/)** — Fundamentos de eletrônica e firmware para makers: controladores, sensores, aquecedores, circuitos de potência, interfaces e guias práticos.
+<div class="hero-links" markdown>
 
-## Documentação do usuário
+[Fórum :fontawesome-brands-discourse:](https://forum.idryer.org/){ .md-button }
+[Discord :fontawesome-brands-discord:](https://discord.gg/jGce5eeHHz){ .md-button }
+[Telegram :fontawesome-brands-telegram:](https://t.me/iDryer){ .md-button }
 
-Os guias de montagem, flashing e operação estão no site principal do projeto: [docs.idryer.org](https://docs.idryer.org/).
+</div>
+
+<div class="grid cards" markdown>
+
+-   :material-cube-outline:{ .lg .middle } __[Projetos](projects/)__
+
+    ---
+
+    Dispositivos do ecossistema: iDryer, iHeater, Storage, Portal.
+
+-   :material-code-tags:{ .lg .middle } __[Desenvolvimento](development/)__
+
+    ---
+
+    Para desenvolvedores: Core (biblioteca ESP32), Construa seu próprio dispositivo.
+
+-   :material-book-open-variant:{ .lg .middle } __WiKi__
+
+    ---
+
+    Secagem, materiais, TDS. _Em migração._
+
+</div>
