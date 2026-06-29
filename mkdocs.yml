@@ -158,6 +158,10 @@ markdown_extensions:
       permalink: true
       toc_depth: 5
 
+repo_url: https://github.com/pavluchenkor/docs-idryer-org
+repo_name: docs-idryer-org
+edit_uri: edit/main/docs/
+
 extra_css:
   - stylesheets/extra.css
 
