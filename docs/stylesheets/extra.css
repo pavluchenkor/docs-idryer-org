@@ -22,7 +22,17 @@
 
   :root,
   [data-md-color-scheme=default] {
-    --md-default-bg-color: #dcdcdc;
+    --md-default-bg-color: #fafafa;
+    --md-code-bg-color: #eef1f4;
+  }
+
+  [data-md-color-scheme=default] .highlight,
+  [data-md-color-scheme=default] .md-typeset pre {
+    background-color: #f1f3f5;
+  }
+
+  [data-md-color-scheme=default] .md-typeset code {
+    background-color: #eef1f4;
   }
 
   /* Адмонишены в светлой теме — правильные цвета Material */
