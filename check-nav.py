@@ -23,6 +23,14 @@ def load_pages(file_path: Path) -> dict:
         return {"error": str(e)}
 
 
+def is_inside_mounted_repo(folder: Path) -> bool:
+    """Вернуть True, если папка находится внутри смонтированного продуктового репо."""
+    for path in (folder, *folder.parents):
+        if (path / ".mounted").exists():
+            return True
+    return False
+
+
 def build_tree(folder: Path) -> dict:
     """Построить полное дерево навигации с вложениями."""
     pages_file = folder / ".pages"
@@ -31,6 +39,7 @@ def build_tree(folder: Path) -> dict:
     title = pages_data.get("title", folder.name)
     children = []
     warnings = []
+    mounted_context = is_inside_mounted_repo(folder)
 
     def add_nav_entry(entry: Any, target_children: list, target_warnings: list) -> None:
         if isinstance(entry, str):
@@ -87,9 +96,11 @@ def build_tree(folder: Path) -> dict:
                     continue
                 target_path = folder / target
                 if target_path.is_dir():
-                    # ПРЕДУПРЕЖДЕНИЕ: использование формата "name: folder" может сломать навигацию
-                    target_warnings.append(f"⚠️  Используется формат '{display_name}: {target}' для папки. "
-                                           f"Это может вызвать проблемы в смонтированных репо!")
+                    if mounted_context:
+                        # В центральной навигации это штатный формат. В смонтированных
+                        # репо он может исказить итоговое дерево после раскладки по mount.
+                        target_warnings.append(f"⚠️  Используется формат '{display_name}: {target}' для папки "
+                                               f"в смонтированном репо: {folder / '.pages'}")
                     # Рекурсивно загрузить подпапку
                     subtree = build_tree(target_path)
                     subtree["title"] = display_name
@@ -181,7 +192,7 @@ def main():
     # Если это docs/ — показать все языки
     if docs_path.name == "docs":
         for lang_dir in sorted(docs_path.iterdir()):
-            if lang_dir.is_dir() and not lang_dir.name.startswith(".") and lang_dir.name != "img":
+            if lang_dir.is_dir() and not lang_dir.name.startswith(".") and (lang_dir / ".pages").exists():
                 print(f"\n📄 {lang_dir.name.upper()}:")
                 tree = build_tree(lang_dir)
                 print_tree(tree)
