@@ -15,10 +15,7 @@ services:
     ports:
       # Отдельный порт от старого dev-движка (9001 занят idryer-docs-builder).
       - "127.0.0.1:9002:9000"
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
+    cpus: 0.5
     volumes:
       # Отдельные путь/кэш — сосуществует со старым /opt/idryer-docs.
       - /opt/docs-idryer-org/site:/output
