@@ -32,62 +32,87 @@ def build_tree(folder: Path) -> dict:
     children = []
     warnings = []
 
+    def add_nav_entry(entry: Any, target_children: list, target_warnings: list) -> None:
+        if isinstance(entry, str):
+            # Пропустить многоточие
+            if entry == "...":
+                return
+            # Пропустить файлы index.md
+            if entry == "index.md":
+                return
+
+            path = folder / entry
+            if path.is_dir():
+                # Рекурсивно загрузить подпапку
+                target_children.append(build_tree(path))
+            elif path.with_suffix(".md").exists():
+                target_children.append({
+                    "title": entry.replace(".md", ""),
+                    "type": "file",
+                    "children": []
+                })
+            else:
+                # Папка не существует — показать как "отсутствует"
+                target_children.append({
+                    "title": f"{entry} ⚠️ (не найдена)",
+                    "type": "missing",
+                    "children": []
+                })
+            return
+
+        if isinstance(entry, dict):
+            for display_name, target in entry.items():
+                if isinstance(target, list):
+                    group_children = []
+                    for nested_entry in target:
+                        add_nav_entry(nested_entry, group_children, target_warnings)
+                    target_children.append({
+                        "title": display_name,
+                        "type": "folder",
+                        "children": group_children,
+                        "warnings": []
+                    })
+                    continue
+
+                if not isinstance(target, str):
+                    target_children.append({
+                        "title": f"{display_name} ⚠️ (неподдерживаемый nav target)",
+                        "type": "missing",
+                        "children": []
+                    })
+                    continue
+
+                if target.startswith("http"):
+                    # Пропустить внешние ссылки
+                    continue
+                target_path = folder / target
+                if target_path.is_dir():
+                    # ПРЕДУПРЕЖДЕНИЕ: использование формата "name: folder" может сломать навигацию
+                    target_warnings.append(f"⚠️  Используется формат '{display_name}: {target}' для папки. "
+                                           f"Это может вызвать проблемы в смонтированных репо!")
+                    # Рекурсивно загрузить подпапку
+                    subtree = build_tree(target_path)
+                    subtree["title"] = display_name
+                    target_children.append(subtree)
+                elif target_path.with_suffix(".md").exists():
+                    target_children.append({
+                        "title": display_name,
+                        "type": "file",
+                        "children": []
+                    })
+                else:
+                    target_children.append({
+                        "title": f"{display_name} ⚠️ (не найдена)",
+                        "type": "missing",
+                        "children": []
+                    })
+
     # Если есть явный nav в .pages, использовать его
     if "nav" in pages_data:
         nav = pages_data["nav"]
         if isinstance(nav, list):
             for entry in nav:
-                if isinstance(entry, str):
-                    # Пропустить многоточие
-                    if entry == "...":
-                        continue
-                    # Пропустить файлы index.md
-                    if entry == "index.md":
-                        continue
-
-                    path = folder / entry
-                    if path.is_dir():
-                        # Рекурсивно загрузить подпапку
-                        children.append(build_tree(path))
-                    elif path.with_suffix(".md").exists():
-                        children.append({
-                            "title": entry.replace(".md", ""),
-                            "type": "file",
-                            "children": []
-                        })
-                    else:
-                        # Папка не существует — показать как "отсутствует"
-                        children.append({
-                            "title": f"{entry} ⚠️ (не найдена)",
-                            "type": "missing",
-                            "children": []
-                        })
-                elif isinstance(entry, dict):
-                    for display_name, target in entry.items():
-                        if target.startswith("http"):
-                            # Пропустить внешние ссылки
-                            continue
-                        target_path = folder / target
-                        if target_path.is_dir():
-                            # ПРЕДУПРЕЖДЕНИЕ: использование формата "name: folder" может сломать навигацию
-                            warnings.append(f"⚠️  Используется формат '{display_name}: {target}' для папки. "
-                                          f"Это может вызвать проблемы в смонтированных репо!")
-                            # Рекурсивно загрузить подпапку
-                            subtree = build_tree(target_path)
-                            subtree["title"] = display_name
-                            children.append(subtree)
-                        elif target_path.with_suffix(".md").exists():
-                            children.append({
-                                "title": display_name,
-                                "type": "file",
-                                "children": []
-                            })
-                        else:
-                            children.append({
-                                "title": f"{display_name} ⚠️ (не найдена)",
-                                "type": "missing",
-                                "children": []
-                            })
+                add_nav_entry(entry, children, warnings)
     else:
         # Автоматическое получение из папок
         try:
