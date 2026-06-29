@@ -8,6 +8,7 @@ theme:
   language: ru
   logo: img/iDryer-logo.svg
   favicon: img/iDryer-favicon.png
+  font: false
   palette:
     - scheme: slate
       toggle:
@@ -35,10 +36,12 @@ theme:
     - content.code.annotate
     - content.code.copy
     - content.tabs.link
-    - content.action.view
     - content.action.edit
 
 extra:
+  analytics:
+    provider: google
+    property: G-R9Z2R33Q16
   extra_asset_dirs:
     - CAD
     - KiCad
@@ -153,10 +156,6 @@ markdown_extensions:
   - toc:
       permalink: true
       toc_depth: 5
-
-repo_url: https://github.com/pavluchenkor/docs-idryer-org
-repo_name: docs-idryer-org
-edit_uri: edit/main/docs/
 
 extra_css:
   - stylesheets/extra.css
