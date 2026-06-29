@@ -22,9 +22,9 @@ except ImportError:
 
 log = logging.getLogger("mkdocs.hooks.edit_url")
 
-EDIT_BRANCH = "main"
+DEFAULT_EDIT_BRANCH = "docs-publish"
 
-_REPO_MAP = None  # кэш: mount-путь → "owner/repo"
+_REPO_MAP = None  # кэш: mount-путь → ("owner/repo", "branch")
 
 
 def _slug_from_url(url: str) -> str:
@@ -49,8 +49,9 @@ def _load_repo_map(config) -> dict:
         for r in (data.get("repos") or []):
             mount = str(r.get("mount", "")).strip().strip("/")
             slug = _slug_from_url(str(r.get("url", "")))
+            branch = str(r.get("branch") or DEFAULT_EDIT_BRANCH).strip()
             if mount and slug:
-                m[mount] = slug
+                m[mount] = (slug, branch)
     except Exception as e:
         log.warning("edit_url: не прочитал repos.yml: %s", e)
         m = {}
@@ -68,9 +69,9 @@ def _compute_edit_url(page, config):
     # самый длинный подходящий mount-префикс (вложенные пути)
     for mount in sorted(repo_map, key=len, reverse=True):
         if tail == mount or tail.startswith(mount + "/"):
-            repo = repo_map[mount]
+            repo, branch = repo_map[mount]
             inside = tail[len(mount):].lstrip("/")
-            return f"https://github.com/{repo}/edit/{EDIT_BRANCH}/docs/{lang}/{inside}"
+            return f"https://github.com/{repo}/edit/{branch}/docs/{lang}/{inside}"
     return None
 
 
