@@ -225,6 +225,27 @@ find . -depth -type d -name .cache -exec rm -rf {} + 2>/dev/null || true
 # чтобы `docker logs -f` показывал прогресс сборки, а не выдавал всё пачкой в конце.
 CI=true PYTHONUNBUFFERED=1 stdbuf -oL -eL mkdocs build --clean --site-dir /tmp/site-out
 
+echo "[$(date -Iseconds)] rebuild: fix not-found base urls"
+python3 - <<'PY'
+from pathlib import Path
+
+site = Path("/tmp/site-out")
+pages = [("", "/")] + [
+    (lang, f"/{lang}/")
+    for lang in ("en", "de", "fr", "es", "cs", "ja", "pt", "pt-BR", "zh", "zh-Hant")
+]
+
+for lang, base in pages:
+    page = site / lang / "not-found" / "index.html" if lang else site / "not-found" / "index.html"
+    if not page.exists():
+        continue
+    html = page.read_text(encoding="utf-8")
+    if "<base href=" in html:
+        continue
+    html = html.replace("<head>", f'<head>\n    <base href="{base}">', 1)
+    page.write_text(html, encoding="utf-8")
+PY
+
 echo "[$(date -Iseconds)] rebuild: sync to output"
 rsync -a --delete /tmp/site-out/ "$OUTPUT/"
 rm -rf /tmp/site-out
