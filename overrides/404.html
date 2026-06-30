@@ -2,13 +2,42 @@
 {% block content %}
 <div class="md-content" data-md-component="content">
   <article class="md-content__inner md-typeset">
-    <h1>Страница не найдена</h1>
-    <p>Такой страницы нет или ссылка устарела.</p>
+    <h1 id="e404-title">Страница не найдена</h1>
+    <p id="e404-text">Такой страницы нет или ссылка устарела.</p>
     <p>
-      <a href="/" class="md-button md-button--primary">На главную</a>
-      <a href="/projects/" class="md-button">Проекты</a>
-      <a href="https://github.com/pavluchenkor/docs-idryer-org/issues/new" class="md-button">Сообщить об ошибке</a>
+      <a id="e404-home"     href="/"          class="md-button md-button--primary">На главную</a>
+      <a id="e404-projects" href="/projects/" class="md-button">Проекты</a>
+      <a href="https://github.com/pavluchenkor/docs-idryer-org/issues/new" class="md-button">Report issue</a>
     </p>
   </article>
 </div>
+<script>
+(function () {
+  var t = {
+    'en':      { title: 'Page not found',        text: 'This page does not exist or the link is outdated.',       home: 'Home',        projects: 'Projects'  },
+    'de':      { title: 'Seite nicht gefunden',  text: 'Diese Seite existiert nicht oder der Link ist veraltet.', home: 'Startseite',  projects: 'Projekte'  },
+    'fr':      { title: 'Page introuvable',      text: "Cette page n'existe pas ou le lien est obsolète.",        home: 'Accueil',     projects: 'Projets'   },
+    'es':      { title: 'Página no encontrada',  text: 'Esta página no existe o el enlace está desactualizado.',  home: 'Inicio',      projects: 'Proyectos' },
+    'cs':      { title: 'Stránka nenalezena',    text: 'Tato stránka neexistuje nebo odkaz je zastaralý.',        home: 'Domů',        projects: 'Projekty'  },
+    'ja':      { title: 'ページが見つかりません',   text: 'このページは存在しないか、リンクが古くなっています。',             home: 'ホーム',       projects: 'プロジェクト' },
+    'pt':      { title: 'Página não encontrada', text: 'Esta página não existe ou o link está desatualizado.',    home: 'Início',      projects: 'Projetos'  },
+    'pt-BR':   { title: 'Página não encontrada', text: 'Esta página não existe ou o link está desatualizado.',    home: 'Início',      projects: 'Projetos'  },
+    'zh':      { title: '页面未找到',             text: '此页面不存在或链接已过期。',                                 home: '首页',         projects: '项目'      },
+    'zh-Hant': { title: '頁面未找到',             text: '此頁面不存在或連結已過期。',                                 home: '首頁',         projects: '專案'      }
+  };
+
+  var m = window.location.pathname.match(/^\/([a-z]{2}(?:-[A-Za-z]+)?)\//);
+  var locale = m ? m[1] : null;
+  var tr = locale ? t[locale] : null;
+
+  if (tr) {
+    document.getElementById('e404-title').textContent    = tr.title;
+    document.getElementById('e404-text').textContent     = tr.text;
+    document.getElementById('e404-home').textContent     = tr.home;
+    document.getElementById('e404-home').href            = '/' + locale + '/';
+    document.getElementById('e404-projects').textContent = tr.projects;
+    document.getElementById('e404-projects').href        = '/' + locale + '/projects/';
+  }
+})();
+</script>
 {% endblock %}
