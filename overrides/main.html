@@ -1,25 +1,64 @@
-{% extends "base.html" %} {% set announce_texts = { "cs": { "message": "Pomozte
-překládat dokumentaci:", "link": "Podpořit" }, "de": { "message": "Helfen Sie
-bei der Dokumentation:", "link": "Unterstützen" }, "en": { "message": "Help
-translate the documentation:", "link": "Support" }, "es": { "message": "Ayuda a
-traducir la documentación:", "link": "Apoyar" }, "fr": { "message": "Aidez à
-traduire la documentation :", "link": "Soutenir" }, "ja": { "message":
-"ドキュメントの翻訳を手伝う:", "link": "サポート" }, "pt": { "message": "Ajude a
-traduzir a documentação:", "link": "Apoiar" }, "pt-BR": { "message": "Ajude a
-traduzir a documentação:", "link": "Apoiar" }, "ru": { "message": "Помогите
-перевести документацию:", "link": "Поддержать" }, "zh": { "message":
-"帮助翻译文档:", "link": "支持" }, "zh-Hant": { "message": "幫助翻譯文檔:",
-"link": "支持" } } %} {% set announce =
-announce_texts.get(config.theme.language, announce_texts.en) %} {% block
-announce %} {{ announce.message }}
+{% extends "base.html" %}
+
+{% set announce_texts = {
+  "ru": {
+    "message": "Помогите перевести документацию:",
+    "link": "Поддержать"
+  },
+  "en": {
+    "message": "Help translate the documentation:",
+    "link": "Support"
+  },
+  "de": {
+    "message": "Helfen Sie bei der Dokumentation:",
+    "link": "Unterstützen"
+  },
+  "fr": {
+    "message": "Aidez à traduire la documentation :",
+    "link": "Soutenir"
+  },
+  "es": {
+    "message": "Ayuda a traducir la documentación:",
+    "link": "Apoyar"
+  },
+  "cs": {
+    "message": "Pomozte překládat dokumentaci:",
+    "link": "Podpořit"
+  },
+  "ja": {
+    "message": "ドキュメントの翻訳を手伝う:",
+    "link": "サポート"
+  },
+  "pt": {
+    "message": "Ajude a traduzir a documentação:",
+    "link": "Apoiar"
+  },
+  "pt-BR": {
+    "message": "Ajude a traduzir a documentação:",
+    "link": "Apoiar"
+  },
+  "zh": {
+    "message": "帮助翻译文档:",
+    "link": "支持"
+  },
+  "zh-Hant": {
+    "message": "幫助翻譯文檔:",
+    "link": "支持"
+  }
+} %}
+
+{% set announce = announce_texts.get(config.theme.language, announce_texts.en) %}
+
+{% block announce %}
+{{ announce.message }}
 <a
   class="announce-chip announce-chip--forum"
   href="https://www.patreon.com/iDryer/"
   target="_blank"
   rel="noopener"
-  >{{ announce.link }}</a
->
+>{{ announce.link }}</a>
 {% endblock %}
+
 {% block analytics %}
 {{ super() }}
 <!-- Yandex.Metrika counter -->
@@ -65,15 +104,16 @@ announce %} {{ announce.message }}
         setTimeout(loadMetrika, 1500);
       }
     });
-  });
+  })();
 </script>
-<noscript
-  ><div>
+<noscript>
+  <div>
     <img
       src="https://mc.yandex.ru/watch/95993226"
       style="position: absolute; left: -9999px"
       alt=""
-    /></div
-></noscript>
+    />
+  </div>
+</noscript>
 <!-- /Yandex.Metrika counter -->
 {% endblock %}
