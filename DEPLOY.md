@@ -33,7 +33,7 @@ certbot в Docker (webroot через `/var/www/certbot`), хостовые се
 2. `.env`:
    ```
    cp .env.example .env
-   # WEBHOOK_SECRET=$(openssl rand -hex 32)  ·  GITHUB_TOKEN=<свой fine-grained>  ·  SITE_URL=https://new.docs.idryer.org/
+   # WEBHOOK_SECRET=$(openssl rand -hex 32)  ·  GITHUB_TOKEN=<свой fine-grained>  ·  SITE_URL=https://docs.idryer.org/
    ```
 3. Образ + билдер:
    ```
@@ -76,6 +76,9 @@ certbot в Docker (webroot через `/var/www/certbot`), хостовые се
 2. nginx: добавить `docs.idryer.org` в `server_name` ОБОИХ блоков `new.docs`-конфига
    (root `/opt/docs-idryer-org/site` и `/hooks/` те же), `nginx -t && nginx -s reload`.
 3. `.env`: `SITE_URL=https://docs.idryer.org/` → `docker compose up -d --force-recreate`
-   → пересборка (новый canonical/sitemap).
+   → пересборка (новый canonical/sitemap). Если строки `SITE_URL` в `.env` нет —
+   берётся дефолт из `docker-compose.yml` (уже прод-домен). Оставленный
+   `SITE_URL=https://new.docs.idryer.org/` перебьёт дефолт: canonical и sitemap
+   на обоих хостах будут указывать на стейджинг — так делать нельзя.
 4. DNS: `docs.idryer.org → 82.146.63.133` (у провайдера — твой шаг).
 5. Старый dev (`dev.idryer.org`) можно оставить или погасить — независимо.

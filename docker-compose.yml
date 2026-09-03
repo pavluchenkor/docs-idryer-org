@@ -9,9 +9,10 @@ services:
     environment:
       WEBHOOK_SECRET: ${WEBHOOK_SECRET}
       GITHUB_TOKEN: ${GITHUB_TOKEN}
-      # Домен сайта (canonical url / sitemap). По умолчанию — стейджинг new.docs.
-      # Переключение на прод: SITE_URL=https://docs.idryer.org/ в .env (см. mkdocs.yml).
-      SITE_URL: ${SITE_URL:-https://new.docs.idryer.org/}
+      # Домен сайта (canonical url / sitemap). По умолчанию — прод docs.idryer.org.
+      # Та же сборка отдаётся и на new.docs.idryer.org, поэтому canonical всегда
+      # должен указывать на прод-домен (см. mkdocs.yml).
+      SITE_URL: ${SITE_URL:-https://docs.idryer.org/}
     ports:
       # Отдельный порт от старого dev-движка (9001 занят idryer-docs-builder).
       - "127.0.0.1:9002:9000"
