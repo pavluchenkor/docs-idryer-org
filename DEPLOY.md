@@ -1,8 +1,9 @@
 # Деплой docs-idryer-org
 
-Движок ставится **рядом** со старым dev-движком — отдельный путь/порт/контейнер,
-ничего старого не трогает. Сначала стейджинг `new.docs.idryer.org`, потом —
-тривиальное переключение на `docs.idryer.org`.
+Движок стоит **рядом** со старым dev-движком — отдельный путь/порт/контейнер,
+ничего старого не трогает. Все три этапа (A/B/C) выполнены: прод живёт на
+`https://docs.idryer.org`, `new.docs.idryer.org` — второе имя того же сайта.
+Шаги ниже сохранены как референс для воспроизведения.
 
 Сервер: `82.146.63.133`. Системный nginx (`include conf.d/*.conf` + `sites-enabled/*`),
 certbot в Docker (webroot через `/var/www/certbot`), хостовые серты в `/etc/letsencrypt`.
@@ -71,14 +72,30 @@ certbot в Docker (webroot через `/var/www/certbot`), хостовые се
      а) раскомментировать репо в `repos.yml`;
      б) повесить GitHub-webhook этого репо на `/hooks/rebuild` (secret = WEBHOOK_SECRET).
 
-## C. Переключение на docs.idryer.org (когда стейджинг проверен)
-1. `certbot certonly … -d docs.idryer.org` (тот же webroot).
-2. nginx: добавить `docs.idryer.org` в `server_name` ОБОИХ блоков `new.docs`-конфига
+## C. Переключение на docs.idryer.org — ВЫПОЛНЕНО ✅
+
+> Прод живой: `https://docs.idryer.org` (HTTPS). `new.docs.idryer.org` остаётся
+> вторым именем того же сайта — оба хоста отдают ОДНУ сборку из
+> `/opt/docs-idryer-org/site`, canonical на обоих указывает на `docs.idryer.org`.
+1. ✅ `certbot certonly … -d docs.idryer.org` (тот же webroot).
+2. ✅ nginx: `docs.idryer.org` добавлен в `server_name` ОБОИХ блоков `new.docs`-конфига
    (root `/opt/docs-idryer-org/site` и `/hooks/` те же), `nginx -t && nginx -s reload`.
-3. `.env`: `SITE_URL=https://docs.idryer.org/` → `docker compose up -d --force-recreate`
-   → пересборка (новый canonical/sitemap). Если строки `SITE_URL` в `.env` нет —
-   берётся дефолт из `docker-compose.yml` (уже прод-домен). Оставленный
-   `SITE_URL=https://new.docs.idryer.org/` перебьёт дефолт: canonical и sitemap
-   на обоих хостах будут указывать на стейджинг — так делать нельзя.
-4. DNS: `docs.idryer.org → 82.146.63.133` (у провайдера — твой шаг).
+3. ✅ `SITE_URL=https://docs.idryer.org/` (2026-09-03). Строка `SITE_URL` удалена из
+   серверного `.env` — теперь берётся дефолт из `docker-compose.yml` (прод-домен).
+   ВАЖНО: `SITE_URL` в `.env` перебивает дефолт; оставленный там
+   `https://new.docs.idryer.org/` = canonical и sitemap на ОБОИХ хостах указывают
+   на стейджинг (так и было до 2026-09-03 — поисковики индексировали `new.docs`).
+4. ✅ DNS: `docs.idryer.org → 82.146.63.133`.
 5. Старый dev (`dev.idryer.org`) можно оставить или погасить — независимо.
+
+### Пересоздание контейнера (баг docker-compose v1.29.2)
+На сервере стоит только `docker-compose` v1.29.2 (плагина `docker compose` нет).
+С Docker 25+ он падает на `--force-recreate` с `KeyError: 'ContainerConfig'` —
+поле убрано из image inspect. При этом старый контейнер уже остановлен, а новый
+не создан: сайт продолжает отдаваться (nginx читает `site/` напрямую), но
+`/hooks/rebuild` даёт 502. Рабочая последовательность:
+```
+docker-compose stop && docker-compose rm -f && docker-compose up -d
+```
+`rm -f` без `-v` тома не трогает (кэш сборки — named volume, `site` — bind-mount).
+Долгосрочно — поставить `docker-compose-plugin` и перейти на `docker compose`.
